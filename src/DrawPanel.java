@@ -9,5 +9,7 @@ public class DrawPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        Graphics2D gD = (Graphics2D) g;
+        g.drawRect(0, 0, 1000, 1000);
     }
 }
