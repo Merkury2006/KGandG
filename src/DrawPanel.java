@@ -14,4 +14,8 @@ public class DrawPanel extends JPanel {
         sun.draw(gD);
     }
 
+    private static void drawLun() {
+        
+    }
+
 }
