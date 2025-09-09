@@ -10,6 +10,8 @@ public class DrawPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D gD = (Graphics2D) g;
-        g.drawRect(0, 0, 1000, 1000);
+        Sun sun = new Sun(200, 100, 50, 90, 15, Color.ORANGE);
+        sun.draw(gD);
     }
+
 }
