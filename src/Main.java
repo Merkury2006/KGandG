@@ -8,3 +8,4 @@ public class Main {
         mainWindow.setVisible(true);
     }
 }
+
