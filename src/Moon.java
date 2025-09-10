@@ -14,8 +14,8 @@ public class Moon {
 
     public void draw(Graphics2D g, Color backgroundColor) {
         g.setColor(color);
-        g.fillOval(center - r, center - r, (int) coefficient * (center + r), (int) coefficient * (center + r));
+        g.fillOval(center - r, center - r, (int) coefficient * (r + r), (int) coefficient * (r+ r));
         g.setColor(backgroundColor);
-        g.fillOval((center - r / 2), center - r, (int) coefficient * (center + r) , (int) coefficient * (center + r));
+        g.fillOval((center - r / 2), center - r, (int) coefficient * (r + r) , (int) coefficient * (r + r));
     }
 }
