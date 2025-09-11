@@ -17,73 +17,28 @@ public class DrawPanel extends JPanel {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         DrawUtils.drawBackground(g2d, WidthPanel, HeightPanel, 5, 400, Color.BLUE, Color.GREEN);
-        AppleTree appleTree = new AppleTree(150, 250, 80, 70, Color.RED, new Color(69, 152, 60), new Color(114, 94, 72));
+        AppleTree appleTree = new AppleTree(150, 300, 20, 70, Color.RED, new Color(69, 152, 60), new Color(114, 94, 72));
         appleTree.draw(g2d);
         Home home = new Home(500, 200, 200, Color.BLACK, Color.YELLOW, Color.RED, Color.WHITE, Color.BLUE, Color.YELLOW, new Color(159, 156, 58), Color.RED, Color.GRAY, Color.GRAY);
         home.draw(g2d);
         Bush bush = new Bush(300, 600, 30, new Color(69, 152, 60));
         bush.draw(g2d);
-        drawLake(g2d, 500, 1000, 200, 70, Color.BLUE, Color.GRAY);
-//        Lamppost lamppost = new Lamppost(100, 30, 200, Color.DARK_GRAY, Color.YELLOW);
-//        lamppost.draw(g2d);
-//        Fir fir = new Fir(300, 500, 50, new Color(69, 152, 60), new Color(114, 94, 72));
-//        fir.draw(g2d);
-//        List<Star> listOfStars = DrawUtils.getArrayOfStars(0, 0, WidthPanel, HeightPanel / 2, 70, Color.WHITE);
-//        for(Star star: listOfStars) {
-//            star.draw(g2d);
-//        }
-//Sun sun = new Sun(200, 100, 50, 90, 15, Color.ORANGE);
-//        Moon moon = new Moon(100, 50, 1.5, Color.YELLOW);
-//sun.draw(g2d);
-//        moon.draw(g2d, Color.BLACK);
+        Lake lake = new Lake(500, 1000, 200, 90, new Color(73, 144, 75),  Color.GRAY, new Color(31, 170, 230, 70), new Color(51, 174, 55));
+        lake.draw(g2d);
+        Lamppost lamppost = new Lamppost(700, 500, 200, Color.DARK_GRAY, Color.YELLOW);
+        lamppost.draw(g2d);
+        Fir fir = new Fir(600, 500, 50, new Color(69, 152, 60), new Color(114, 94, 72));
+        fir.draw(g2d);
+        List<Star> listOfStars = DrawUtils.getArrayOfStars(0, 0, WidthPanel, HeightPanel / 2, 70, Color.WHITE);
+        for(Star star: listOfStars) {
+            star.draw(g2d);
+        }
+        Sun sun = new Sun(400, 100, 50, 90, 15, Color.ORANGE);
+        Moon moon = new Moon(100, 50, 1.5, Color.YELLOW);
+        Cloud cloud = new Cloud(500, 50, 50, Color.WHITE);
+        cloud.draw(g2d);
+        sun.draw(g2d);
+        moon.draw(g2d, Color.BLACK);
     }
 
-
-//    public static void drawLake(Graphics2D g, int x, int y, int sizeOfLake, Color color) {
-//        int n = 10;
-//        g.setColor(color);
-//        g.fillOval(x - sizeOfLake, y - sizeOfLake, sizeOfLake * 3 , sizeOfLake);
-//        g.setColor(Color.GRAY);
-//        double da = 2 * Math.PI / n;
-//        for (int i = 0; i < n; i ++) {
-//            double a = da * i;
-//            double x2 =(int) (x + (sizeOfLake * 3 / 2) * Math.cos(a));
-//            double y2 = (int) (y + (sizeOfLake / 2) * Math.sin(a));
-//            g.fillOval((int) x2 - 5, (int) y2 - 5, 5 , 5);
-//        }
-//    }
-    public static void drawLake(Graphics2D g, int x, int y, int sizeOfLake, int chanceOfAppearanceStone, Color colorOfLake, Color colorOfStone) {
-        Random random = new Random();
-        int n = 10;
-
-        g.setColor(colorOfLake);
-        g.fillOval(x - sizeOfLake, y - sizeOfLake, sizeOfLake * 3, sizeOfLake);
-
-        int centerX = x - sizeOfLake + sizeOfLake * 3 / 2;
-        int centerY = y - sizeOfLake + sizeOfLake / 2;
-        double da = 2 * Math.PI / n;
-        int offset = sizeOfLake / 2;
-        for (int i = 0; i < n; i++) {
-            int curChanceOfAppearanceStone = random.nextInt(100);
-            if (curChanceOfAppearanceStone <= chanceOfAppearanceStone) {
-                double a = da * i;
-                int pointX = centerX + (int) ((double) (sizeOfLake * 3 / 2 + sizeOfLake / 4 / 2) * Math.cos(a));
-                if (Math.cos(a) > 0) {
-                    pointX += (offset + random.nextInt(10));
-                } else if (Math.cos(a) < 0) {
-                    pointX -= (offset + random.nextInt(10));
-                }
-
-                int pointY = centerY + (int) ((double) (sizeOfLake / 2 + sizeOfLake / 4 / 2) * Math.sin(a));
-                g.setColor(colorOfStone);
-
-                g.fillOval(pointX - sizeOfLake / 4 / 2, pointY - sizeOfLake / 4 / 2, sizeOfLake / 4 * 2, sizeOfLake / 4);
-            }
-        }
-        g.setColor(Color.BLACK);
-        for (int i = y - sizeOfLake + 50; i < y; i += 50) {
-            g.drawLine((int) (x - sizeOfLake * 0.4), i, (int) (x + sizeOfLake * 1.4), i);
-        }
-
-    }
 }
