@@ -18,7 +18,7 @@ public class AppleTree {
     }
 
     public void draw(Graphics2D g) {
-        Random random = new Random();
+        Random random = new Random(1);
 
         //Отрисовка ствола дерева
         Path2D path = new Path2D.Double();

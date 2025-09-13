@@ -21,7 +21,7 @@ public class Flower {
 
         //Стебель
         g.setColor(colorOfStem);
-        g.setStroke(new BasicStroke(5));
+        g.setStroke(new BasicStroke((float) (size / 2.5)));
         g.drawLine((int) (x - (double) size / 2), (int) (y - (double) size / 2), (int) (x - (double) size / 2), y + size);
 
 

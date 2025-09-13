@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.util.Random;
 
 public class Home {
     private int x, y, size;
@@ -113,7 +114,19 @@ public class Home {
 
 
         //Цветочная площадка
+        Random random = new Random();
         g.setColor(new Color(105, 80, 52));
         g.fillRect(x - size * 2/16, y + size * 34/16, size * 18/16, size / 6);
+        for (int curX = x; curX <= x + size * 15/16; curX += size / 5) {
+            for (int curY = y + size * 33/16; curY <= y + size * 36/16; curY += size / 10) {
+                Flower flower = new Flower(curX + random.nextInt(size / 20), curY + random.nextInt(size / 20), size / 20, Color.GREEN, Color.BLUE, Color.YELLOW);
+                flower.draw(g);
+            }
+        }
+        Fence fence = new Fence(x - size * 2/16, y + size * 34/16, size * 18/16, size / 6, new Color(82, 68, 52));
+        fence.draw(g);
+//        g.setStroke(new BasicStroke(size/20));
+//        g.drawLine(x - size * 2/16, y + size * 34/16, x - size * 7/64, y + size * 33/16);
+
     }
 }
