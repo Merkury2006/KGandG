@@ -98,6 +98,10 @@ public class Home {
         //Подоконник
         g.setColor(colorOfWindowSill);
         g.fillRect(x - size / 16, y + size * 7/4, size * 14/16, size / 16);
+        for (int curX = x + size/16; curX <= x + size * 13/16; curX += size / 5) {
+            Flower flower = new Flower(curX, y + size * 54 / 32, size / 20, Color.GREEN, Color.RED, Color.YELLOW);
+            flower.draw(g);
+        }
 
         //Ступеньки
         g.setStroke(new BasicStroke(1));
@@ -106,5 +110,10 @@ public class Home {
         g.setColor(colorOfRungs);
         g.fillRect(x - size * 13/16, y + size * 2, size * 10/16, size / 16);
         g.fillRect(x - size * 14/16, y + size * 33/16, size * 12/ 16, size / 14);
+
+
+        //Цветочная площадка
+        g.setColor(new Color(105, 80, 52));
+        g.fillRect(x - size * 2/16, y + size * 34/16, size * 18/16, size / 6);
     }
 }
