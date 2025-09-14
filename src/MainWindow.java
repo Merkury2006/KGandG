@@ -4,9 +4,9 @@ import java.awt.*;
 public class MainWindow extends JFrame {
     private final DrawPanel dp;
 
-    public MainWindow(int widthWindow, int heightWindow) throws HeadlessException {
-        this.setSize(widthWindow, heightWindow);
-        this.dp = new DrawPanel();
+    public MainWindow() throws HeadlessException {
+        long seed = System.currentTimeMillis();
+        this.dp = new DrawPanel(seed);
         this.add(dp);
         this.pack();
     }

@@ -1,15 +1,17 @@
+package GeomObjects;
+
 import java.awt.*;
 
 public class Sun {
-    private int x, y, r, R, n;
+    private final int n = 8;
+    private int x, y, r, R;
     private Color c;
 
-    public Sun(int x, int y, int r, int rayLength, int n, Color c) {
+    public Sun(int x, int y, int r, int rayLength, Color c) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.R = r + rayLength;
-        this.n = n;
         this.c = c;
     }
 
@@ -23,6 +25,7 @@ public class Sun {
             double y1 = y + r * Math.sin(a);
             double x2 = x + R * Math.cos(a);
             double y2 = y + R * Math.sin(a);
+            g.setStroke(new BasicStroke((float) r / 10));
             g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
         }
     }

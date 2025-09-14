@@ -1,3 +1,5 @@
+package GeomObjects;
+
 import java.awt.*;
 import java.awt.geom.Path2D;
 
@@ -13,8 +15,7 @@ public class Fir {
         this.colorTrunk = colorTrunk;
     }
 
-    public void draw(Graphics2D g) {
-        Path2D path = new Path2D.Double();
+    public void draw(Graphics2D g, Path2D path) {
         path.moveTo(x, y);
         path.lineTo(x - size, y + size);
         path.lineTo(x + size, y + size);
@@ -31,9 +32,9 @@ public class Fir {
 
         g.setColor(colorTree);
         g.fill(path);
+        path.reset();
         g.setColor(colorTrunk);
         g.fillRect((int) (x - size * 0.3), y + size * 3, (int) (size * 0.6), (int) (size * 0.4));
-
     }
 
 }

@@ -1,15 +1,21 @@
+package GeomObjects;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
 public class Duck {
     private int x, y, size;
+    private int speed;
     private Color colorOfBeak, colorOfNeck, colorOfHead, colorOfEye, colorOfInsideOfEye, colorOfBody, colorOfWing;
+    private boolean facingRight;
+    private int minX, maxX;
 
-    public Duck(int x, int y, int size, Color colorOfBeak, Color colorOfNeck, Color colorOfHead, Color colorOfEye, Color colorOfInsideOfEye, Color colorOfBody, Color colorOfWing) {
+    public Duck(int x, int y, int size, int speed, Color colorOfBeak, Color colorOfNeck, Color colorOfHead, Color colorOfEye, Color colorOfInsideOfEye, Color colorOfBody, Color colorOfWing) {
         this.x = x;
         this.y = y;
         this.size = size;
+        this.speed = speed;
         this.colorOfBeak = colorOfBeak;
         this.colorOfNeck = colorOfNeck;
         this.colorOfHead = colorOfHead;
@@ -19,7 +25,72 @@ public class Duck {
         this.colorOfWing = colorOfWing;
     }
 
-    public void  drawTowardsLeft(Graphics2D g) {
+    public void setColorOfBeak(Color colorOfBeak) {
+        this.colorOfBeak = colorOfBeak;
+    }
+
+    public void setColorOfNeck(Color colorOfNeck) {
+        this.colorOfNeck = colorOfNeck;
+    }
+
+    public void setColorOfHead(Color colorOfHead) {
+        this.colorOfHead = colorOfHead;
+    }
+
+    public void setColorOfEye(Color colorOfEye) {
+        this.colorOfEye = colorOfEye;
+    }
+
+    public void setColorOfInsideOfEye(Color colorOfInsideOfEye) {
+        this.colorOfInsideOfEye = colorOfInsideOfEye;
+    }
+
+    public void setColorOfBody(Color colorOfBody) {
+        this.colorOfBody = colorOfBody;
+    }
+
+    public void setColorOfWing(Color colorOfWing) {
+        this.colorOfWing = colorOfWing;
+    }
+
+    public void setFacingRight(boolean facingRight) {
+        this.facingRight = facingRight;
+    }
+
+    public void setDirection(boolean facingRight) {
+        this.facingRight = facingRight;
+    }
+
+    public void setBounds(int minX, int maxX) {
+        this.minX = minX;
+        this.maxX = maxX;
+    }
+
+    public void update() {
+        if (facingRight) {
+            x += speed;
+            if (x > maxX) {
+                facingRight = false;
+            }
+        } else {
+            x -= speed;
+            if (x < minX) {
+                facingRight = true;
+            }
+        }
+    }
+    
+    public void draw(Graphics2D g) {
+        if (facingRight) {
+            drawTowardsRight(g);
+        }
+        else {
+            drawTowardsLeft(g);
+        }
+    }
+    
+    private void  drawTowardsLeft(Graphics2D g) {
+        
         //Клюв
         g.setColor(colorOfBeak);
         Path2D path = new Path2D.Double();
@@ -58,17 +129,15 @@ public class Duck {
     }
 
 
-    public void drawTowardsRight(Graphics2D g) {
-        drawMirror(g);
+    private void drawTowardsRight(Graphics2D g) {
+       drawMirror(g);
     }
 
     private void drawMirror(Graphics2D g) {
         AffineTransform original = g.getTransform();
-        AffineTransform mirror = new AffineTransform();
-        mirror.translate(x, y);
-        mirror.scale(-1, 1);
-        mirror.translate(-x, -y);
-        g.setTransform(mirror);
+        g.translate(x + size * 1.5, 0);
+        g.scale(-1, 1);
+        g.translate(-x - size * 1.5, 0);
         drawTowardsLeft(g);
         g.setTransform(original);
     }

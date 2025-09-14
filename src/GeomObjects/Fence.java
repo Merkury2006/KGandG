@@ -1,5 +1,6 @@
+package GeomObjects;
+
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 public class Fence {
     private int x, y, width, height;
@@ -10,6 +11,17 @@ public class Fence {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.color = color;
+    }
+
+    public Fence(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setColor(Color color) {
         this.color = color;
     }
 

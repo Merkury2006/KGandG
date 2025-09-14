@@ -1,3 +1,5 @@
+package GeomObjects;
+
 import java.awt.*;
 
 public class Lamppost {

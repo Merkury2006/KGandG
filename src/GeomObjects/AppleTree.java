@@ -1,3 +1,5 @@
+package GeomObjects;
+
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.util.Random;
@@ -17,11 +19,8 @@ public class AppleTree {
         this.colorTrunk = colorTrunk;
     }
 
-    public void draw(Graphics2D g) {
-        Random random = new Random(1);
-
+    public void draw(Graphics2D g, Random random, Path2D path) {
         //Отрисовка ствола дерева
-        Path2D path = new Path2D.Double();
         path.moveTo(x, y);
         path.curveTo(x - (double) size / 4, y + size, x - size, y + size * 2 , x - size * 0.9, y + size * 4);
         path.lineTo(x + size * 0.9, y + size * 4);
@@ -31,6 +30,7 @@ public class AppleTree {
 
         g.setColor(colorTrunk);
         g.fill(path);
+        path.reset();
 
         //Отрисовка кроны дерева и яблок
         for (int t = 0; t < 2; t ++) {

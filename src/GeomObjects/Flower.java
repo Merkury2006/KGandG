@@ -1,3 +1,5 @@
+package GeomObjects;
+
 import java.awt.*;
 
 public class Flower {
@@ -14,7 +16,23 @@ public class Flower {
         this.colorOfCenterFlower = colorOfCenterFlower;
     }
 
+    public Flower(int x, int y, int size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+    }
 
+    public void setColorOfStem(Color colorOfStem) {
+        this.colorOfStem = colorOfStem;
+    }
+
+    public void setColorOfPetals(Color colorOfPetals) {
+        this.colorOfPetals = colorOfPetals;
+    }
+
+    public void setColorOfCenterFlower(Color colorOfCenterFlower) {
+        this.colorOfCenterFlower = colorOfCenterFlower;
+    }
 
     public void draw(Graphics2D g) {
         int n = 5;

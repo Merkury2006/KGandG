@@ -1,5 +1,8 @@
+package GeomObjects;
+
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Home {
@@ -14,6 +17,10 @@ public class Home {
     private Color colorOfDoorHandle;
     private Color colorOfWindowSill;
     private Color colorOfRungs;
+
+    private ArrayList<Flower> flowersOnWindowsill = new ArrayList<>();
+    private ArrayList<Flower> flowersOnGarden = new ArrayList<>();
+    private Fence fence;
 
     public Home(int x, int y, int size, Color colorOfPipe, Color colorOfRoof, Color colorOfHome, Color colorOfShutters,
                 Color colorOfWindows, Color colorOfDoor, Color colorOfInsideOfDoor, Color colorOfDoorHandle,
@@ -31,16 +38,30 @@ public class Home {
         this.colorOfDoorHandle = colorOfDoorHandle;
         this.colorOfWindowSill = colorOfWindowSill;
         this.colorOfRungs = colorOfRungs;
+        fence = new Fence(x - size * 2/16, y + size * 34/16, size * 18/16, size / 6);
     }
 
-    public void draw(Graphics2D g) {
+    public ArrayList<Flower> getFlowersOnWindowsill() {
+        return flowersOnWindowsill;
+    }
+
+    public ArrayList<Flower> getFlowersOnGarden() {
+        return flowersOnGarden;
+    }
+
+    public Fence getFence() {
+        return fence;
+    }
+
+    public void draw(Graphics2D g, Random random, Path2D path) {
+
+
         //Труба
         g.setColor(colorOfPipe);
         g.fillRect(x + size /2, y + size / 8, size / 4, size / 2);
 
         //Крыша
         g.setColor(colorOfRoof);
-        Path2D path = new Path2D.Double();
         path.moveTo(x, y);
         path.lineTo(x - (double) (size * 9/8), y + (double) (size * 9/8));
         path.lineTo(x - (double) (size * 5/4), y + size);
@@ -49,16 +70,17 @@ public class Home {
         path.lineTo(x + (double) (size * 9/8), y + (double) (size * 9/8));
         path.closePath();
         g.fill(path);
+        path.reset();
 
 
         //Дом
         g.setColor(colorOfHome);
-        Path2D path2 = new Path2D.Double();
-        path2.moveTo(x, y);
-        path2.lineTo(x - size, y + size);
-        path2.lineTo(x + size, y + size);
-        path2.closePath();
-        g.fill(path2);
+        path.moveTo(x, y);
+        path.lineTo(x - size, y + size);
+        path.lineTo(x + size, y + size);
+        path.closePath();
+        g.fill(path);
+        path.reset();
         g.fillRect(x - size, y + size, size * 2, size);
 
         //Доп окно
@@ -99,10 +121,7 @@ public class Home {
         //Подоконник
         g.setColor(colorOfWindowSill);
         g.fillRect(x - size / 16, y + size * 7/4, size * 14/16, size / 16);
-        for (int curX = x + size/16; curX <= x + size * 13/16; curX += size / 5) {
-            Flower flower = new Flower(curX, y + size * 54 / 32, size / 20, Color.GREEN, Color.RED, Color.YELLOW);
-            flower.draw(g);
-        }
+        flowersOnWindowsill.forEach(flower -> flower.draw(g));
 
         //Ступеньки
         g.setStroke(new BasicStroke(1));
@@ -114,19 +133,23 @@ public class Home {
 
 
         //Цветочная площадка
-        Random random = new Random();
         g.setColor(new Color(105, 80, 52));
         g.fillRect(x - size * 2/16, y + size * 34/16, size * 18/16, size / 6);
+        flowersOnGarden.forEach(flower -> flower.draw(g));
+        fence.draw(g);
+    }
+
+    public void initFlowersOnWindowsill() {
+        for (int curX = x + size/16; curX <= x + size * 13/16; curX += size / 5) {
+            flowersOnWindowsill.add(new Flower(curX, y + size * 54 / 32, size / 20));
+        }
+    }
+
+    public void initFlowersOnGarden(Random random) {
         for (int curX = x; curX <= x + size * 15/16; curX += size / 5) {
             for (int curY = y + size * 33/16; curY <= y + size * 36/16; curY += size / 10) {
-                Flower flower = new Flower(curX + random.nextInt(size / 20), curY + random.nextInt(size / 20), size / 20, Color.GREEN, Color.BLUE, Color.YELLOW);
-                flower.draw(g);
+                flowersOnGarden.add(new Flower(curX + random.nextInt(size / 20), curY + random.nextInt(size / 20), size / 20));
             }
         }
-        Fence fence = new Fence(x - size * 2/16, y + size * 34/16, size * 18/16, size / 6, new Color(82, 68, 52));
-        fence.draw(g);
-//        g.setStroke(new BasicStroke(size/20));
-//        g.drawLine(x - size * 2/16, y + size * 34/16, x - size * 7/64, y + size * 33/16);
-
     }
 }
