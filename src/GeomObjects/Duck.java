@@ -11,6 +11,10 @@ public class Duck {
     private boolean facingRight;
     private int minX, maxX;
 
+    public int getY() {
+        return y;
+    }
+
     public Duck(int x, int y, int size, int speed, Color colorOfBeak, Color colorOfNeck, Color colorOfHead, Color colorOfEye, Color colorOfInsideOfEye, Color colorOfBody, Color colorOfWing) {
         this.x = x;
         this.y = y;
@@ -23,6 +27,13 @@ public class Duck {
         this.colorOfInsideOfEye = colorOfInsideOfEye;
         this.colorOfBody = colorOfBody;
         this.colorOfWing = colorOfWing;
+    }
+
+    public Duck(int x, int y, int size, int speed) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speed = speed;
     }
 
     public void setColorOfBeak(Color colorOfBeak) {

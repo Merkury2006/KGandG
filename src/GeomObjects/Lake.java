@@ -2,7 +2,9 @@ package GeomObjects;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Lake {
     private int x, y, size, chanceOfAppearanceStone,  chanceOfAppearanceDuck;
@@ -78,10 +80,10 @@ public class Lake {
     public void initializedDucks(Random random) {
         if (!ducksInitialized) {
             for (int curX = (int) (x - size * 0.5); curX <= x + size; curX += size / 2) {
-                for (int curY = (int) (y - size); curY <= y - size * 0.5; curY += size / 4) {
+                for (int curY = (int) (y - size * 0.5); curY >= (y - size); curY -= size / 4) {
                     int curChanceOfAppearanceDuck = random.nextInt(100);
                     if (curChanceOfAppearanceDuck <= chanceOfAppearanceDuck) {
-                        Duck duck = new Duck(curX + random.nextInt(10), curY + random.nextInt(10), 20, 1, Color.ORANGE, Color.ORANGE, Color.RED, Color.BLACK, Color.ORANGE, Color.BLACK, Color.ORANGE);
+                        Duck duck = new Duck(curX + random.nextInt(size / 10), curY + random.nextInt(size / 10), (int) (size / 6.5), 1);
                         if (random.nextInt(100) <= 50) {
                             duck.setDirection(true);
                         }
@@ -94,6 +96,10 @@ public class Lake {
             }
         }
         ducksInitialized = true;
+    }
+
+    public void sortedDuckList(){
+        duckList.sort(Comparator.comparingInt(Duck::getY));
     }
 
     public ArrayList<Duck> getDuckList() {

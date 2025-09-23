@@ -76,8 +76,10 @@ public class DrawPanel extends JPanel {
 
         lake.initializedDucks(random);
 
+        lake.sortedDuckList();
+
         lake.getDuckList().forEach(duck -> {
-            duck.setBounds((int) (lake.getX() - lake.getSize() * 0.7), (int) (lake.getX() + lake.getSize() * 1.5));
+            duck.setBounds((int) (lake.getX() - lake.getSize() * 0.5), lake.getX() + lake.getSize());
             duck.setColorOfBody(Color.RED);
             duck.setColorOfBeak(Color.ORANGE);
             duck.setColorOfEye(Color.WHITE);
@@ -86,6 +88,7 @@ public class DrawPanel extends JPanel {
             duck.setColorOfNeck(Color.ORANGE);
             duck.setColorOfWing(Color.ORANGE);
         });
+
 
 
 
@@ -106,15 +109,12 @@ public class DrawPanel extends JPanel {
 
         double scaleX = (double) currentWidth / INITIAL_WIDTH;
         double scaleY = (double) currentHeight / INITIAL_HEIGHT;
-        double scale = Math.max(scaleX, scaleY);
 
-        int scaledWidth = (int)(INITIAL_WIDTH * scale);
-        int scaledHeight = (int)(INITIAL_HEIGHT * scale);
-        int offsetX = (currentWidth - scaledWidth) / 2;
-        int offsetY = (currentHeight - scaledHeight) / 2;
+        int offsetX = 0;
+        int offsetY = 0;
 
         g2d.translate(offsetX, offsetY);
-        g2d.scale(scale, scale);
+        g2d.scale(scaleX, scaleY);
 
         DrawUtils.drawBackground(g2d, INITIAL_WIDTH, INITIAL_HEIGHT, INITIAL_HEIGHT / 200,
                 INITIAL_WIDTH / 3, new Color(41, 194, 214), new Color(61, 184, 50));
