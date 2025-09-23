@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class DrawPanel extends JPanel {
-    private static final int INITIAL_WIDTH = 1200;
-    private static final int INITIAL_HEIGHT = 1200;
-    private final long seed; // Сохраняем исходный seed
+    private static final int INITIAL_WIDTH = 600;
+    private static final int INITIAL_HEIGHT = 600;
+    private final long seed;
     private Random random;
     private Path2D path = new Path2D.Double();
 
@@ -29,21 +29,21 @@ public class DrawPanel extends JPanel {
 
 
 
-        sun = new Sun(100, 100, 50, 70, new Color(221, 240, 14));
+        sun = new Sun(INITIAL_WIDTH / 12, INITIAL_HEIGHT / 12, INITIAL_WIDTH / 24, INITIAL_WIDTH / 17, new Color(221, 240, 14));
 
-        for (int curX = 300; curX <= 1000; curX += 300) {
-            cloudList.add(new Cloud(curX, 50 + random.nextInt(200), 50 + random.nextInt(50), 1,
+        for (int curX = INITIAL_WIDTH / 4; curX <= INITIAL_WIDTH / 1.2; curX += INITIAL_WIDTH / 4) {
+            cloudList.add(new Cloud(curX, INITIAL_HEIGHT / 24 + random.nextInt(INITIAL_HEIGHT / 6), INITIAL_WIDTH / 24 + random.nextInt(INITIAL_WIDTH / 24), 1,
                     new Color(213, 224, 227)));
         }
 
-        for (int curX = 0; curX <= 1200; curX += 150) {
-            firList.add(new Fir(curX, 500 - random.nextInt(70), 50 + random.nextInt(20), new Color(52, 130, 33), new Color(74, 77, 43)));
+        for (int curX = 0; curX <= INITIAL_WIDTH; curX += INITIAL_WIDTH / 8) {
+            firList.add(new Fir(curX, (int) (INITIAL_HEIGHT / 2.4 - random.nextInt(INITIAL_HEIGHT / 17)), INITIAL_WIDTH / 24 + random.nextInt(INITIAL_WIDTH / 60), new Color(52, 130, 33), new Color(74, 77, 43)));
         }
 
-        appleTree = new AppleTree(300, 350, INITIAL_WIDTH / 12, 70,
+        appleTree = new AppleTree(INITIAL_WIDTH / 4, (int) (INITIAL_HEIGHT / 3.4), INITIAL_WIDTH / 12, 70,
                 new Color(222, 29, 51), new Color(38, 148, 57), new Color(74, 65, 44));
 
-        home = new Home(800, 300, INITIAL_WIDTH / 6, new Color(78, 84, 80),
+        home = new Home((int) (INITIAL_WIDTH / 1.5), INITIAL_HEIGHT / 4 ,INITIAL_WIDTH / 6, new Color(78, 84, 80),
                 new Color(226, 229, 25), new Color(227, 71, 36), new Color(232, 232, 232),
                 new Color(27, 106, 196), new Color(226, 229, 25), new Color(159, 156, 58),
                 new Color(227, 71, 36), new Color(160, 161, 163), new Color(49, 50, 51));
@@ -65,12 +65,12 @@ public class DrawPanel extends JPanel {
 
         home.getFence().setColor(new Color(38, 38, 34));
 
-        lamppost = new Lamppost(1050, 500, 300, new Color(76, 77, 76), new Color(161, 173, 29));
+        lamppost = new Lamppost((int) (INITIAL_WIDTH / 1.142857), (int) (INITIAL_HEIGHT / 2.4), INITIAL_WIDTH / 4, new Color(76, 77, 76), new Color(161, 173, 29));
 
-        bush1 = new Bush(550, 700, INITIAL_WIDTH / 32, new Color(50, 127, 63));
-        bush2 = new Bush(100, 700, INITIAL_WIDTH / 25, new Color(50, 127, 63));
+        bush1 = new Bush((int) (INITIAL_WIDTH / 2.18), (int) (INITIAL_HEIGHT / 1.714), INITIAL_WIDTH / 32, new Color(50, 127, 63));
+        bush2 = new Bush(INITIAL_WIDTH / 12, (int) (INITIAL_HEIGHT / 1.714), INITIAL_WIDTH / 25, new Color(50, 127, 63));
 
-        lake = new Lake(400, 1100, INITIAL_WIDTH / 6, 90, 30,
+        lake = new Lake(INITIAL_WIDTH / 3, (int) (INITIAL_HEIGHT / 1.090909), INITIAL_WIDTH / 6, 90, 30,
                 new Color(48, 84, 42), new Color(82, 81, 78), new Color(47, 96, 102),
                 new Color(27, 117, 47));
 
@@ -140,7 +140,7 @@ public class DrawPanel extends JPanel {
 
     private void updateClouds() {
         for (Cloud cloud : cloudList) {
-            cloud.update();
+            cloud.update(INITIAL_WIDTH);
         }
     }
 

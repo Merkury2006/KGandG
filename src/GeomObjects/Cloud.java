@@ -29,12 +29,12 @@ public class Cloud {
         g.fillOval((int) (x + 0.3 * r), (int) (currentY - 0.5 * r), (int) (r + 0.4 * r), (int) (r + 0.4 * r));
     }
 
-    public void update() {
+    public void update(int width) {
         angle += period;
         x += speed;
         int verticalMovement = (int)(amplitude * Math.sin(angle));
-        if (x > 1400) {
-            x = -100;
+        if (x > width * 1.15) {
+            x = -width/12;
         }
     }
 
