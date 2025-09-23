@@ -29,6 +29,7 @@ public class DrawPanel extends JPanel {
 
 
 
+        v
         sun = new Sun(INITIAL_WIDTH / 12, INITIAL_HEIGHT / 12, INITIAL_WIDTH / 24, INITIAL_WIDTH / 17, new Color(221, 240, 14));
 
         for (int curX = INITIAL_WIDTH / 4; curX <= INITIAL_WIDTH / 1.2; curX += INITIAL_WIDTH / 4) {
