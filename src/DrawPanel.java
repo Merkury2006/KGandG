@@ -32,7 +32,7 @@ public class DrawPanel extends JPanel {
 
     public DrawPanel() {
         this.timeManager = new TimeManager();
-        this.sceneBuilder = new SceneBuilder(INITIAL_WIDTH, INITIAL_HEIGHT, random, timeManager);
+        this.sceneBuilder = new SceneBuilder(INITIAL_WIDTH, INITIAL_HEIGHT, random);
 
         this.sun = sceneBuilder.buildSun();
         this.moon = sceneBuilder.buildMoon();

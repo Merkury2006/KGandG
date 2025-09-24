@@ -7,13 +7,11 @@ import java.util.Random;
 public class SceneBuilder {
     private final int width, height;
     private final Random random;
-    private TimeManager timeManager;
 
-    public SceneBuilder(int width, int height, Random random, TimeManager timeManager) {
+    public SceneBuilder(int width, int height, Random random) {
         this.width = width;
         this.height = height;
         this.random = random;
-        this.timeManager = timeManager;
     }
     
     public Sun buildSun() {
