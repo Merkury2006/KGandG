@@ -20,6 +20,21 @@ public class AppleTree {
         this.colorTrunk = colorTrunk;
     }
 
+    public AppleTree(int x, int y, int size, int chanceOfAppearanceApple) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.chanceOfAppearanceApple = chanceOfAppearanceApple;
+    }
+
+    public void setColorCrown(Color colorCrown) {
+        this.colorCrown = colorCrown;
+    }
+
+    public void setColorTrunk(Color colorTrunk) {
+        this.colorTrunk = colorTrunk;
+    }
+
     public ArrayList<Apple> getAppleList() {
         return appleList;
     }

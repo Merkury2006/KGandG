@@ -29,6 +29,7 @@ public class Duck {
         this.colorOfWing = colorOfWing;
     }
 
+
     public Duck(int x, int y, int size, int speed) {
         this.x = x;
         this.y = y;

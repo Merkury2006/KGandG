@@ -15,6 +15,17 @@ public class Sun {
         this.c = c;
     }
 
+    public Sun(int x, int y, int r, int r1) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        R = r1;
+    }
+
+    public void setC(Color c) {
+        this.c = c;
+    }
+
     public void draw(Graphics2D g) {
         g.setColor(c);
         g.fillOval(x - r, y - r, r + r, r + r);

@@ -13,14 +13,23 @@ public class Lake {
     private ArrayList<Duck> duckList = new ArrayList<>();
     private ArrayList<Stone> stoneList = new ArrayList<>();
 
-    public Lake(int x, int y, int size, int chanceOfAppearanceStone, int chanceOfAppearanceDuck, Color colorOfLake, Color colorOfGlare, Color colorOfWaterLily) {
+    public Lake(int x, int y, int size, int chanceOfAppearanceStone, int chanceOfAppearanceDuck) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.chanceOfAppearanceStone = chanceOfAppearanceStone;
         this.chanceOfAppearanceDuck = chanceOfAppearanceDuck;
+    }
+
+    public void setColorOfLake(Color colorOfLake) {
         this.colorOfLake = colorOfLake;
+    }
+
+    public void setColorOfGlare(Color colorOfGlare) {
         this.colorOfGlare = colorOfGlare;
+    }
+
+    public void setColorOfWaterLily(Color colorOfWaterLily) {
         this.colorOfWaterLily = colorOfWaterLily;
     }
 

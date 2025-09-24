@@ -14,6 +14,16 @@ public class Bush {
         this.color = color;
     }
 
+    public Bush(int x, int y, int size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public void draw(Graphics2D g) {
         g.setColor(color);
         for (int i = x - size; i <= x + size; i += size) {

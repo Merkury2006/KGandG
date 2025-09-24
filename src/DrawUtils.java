@@ -31,20 +31,4 @@ public class DrawUtils {
         g.setColor(skyColor);
         g.fill(topPoly);
     }
-
-    public static  java.util.List<Star> getArrayOfStars(int x, int y, int width, int height, int chanceOfAppearanceStar, Color colorStar) {
-        java.util.List<Star> arrayOfStars = new ArrayList<Star>();
-        Random random = new Random();
-        for (int i = x + 25; i < width - 25; i += 50) {
-            for (int j = y + 25; j < height - 25; j += 50) {
-                int curChanceOfAppearanceStar = random.nextInt(100);
-                if (curChanceOfAppearanceStar <= chanceOfAppearanceStar) {
-                    int curCoordOfX = i + random.nextInt(20);
-                    int curCoordOfY = j + random.nextInt(20);
-                    arrayOfStars.add(new Star(curCoordOfX, curCoordOfY, colorStar));
-                }
-            }
-        }
-        return arrayOfStars;
-    }
 }

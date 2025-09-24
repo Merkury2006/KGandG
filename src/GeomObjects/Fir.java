@@ -15,6 +15,20 @@ public class Fir {
         this.colorTrunk = colorTrunk;
     }
 
+    public Fir(int x, int y, int size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+    }
+
+    public void setColorTree(Color colorTree) {
+        this.colorTree = colorTree;
+    }
+
+    public void setColorTrunk(Color colorTrunk) {
+        this.colorTrunk = colorTrunk;
+    }
+
     public void draw(Graphics2D g, Path2D path) {
         path.moveTo(x, y);
         path.lineTo(x - size, y + size);
