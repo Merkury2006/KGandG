@@ -8,19 +8,18 @@ import java.util.stream.Collectors;
 
 public class Lake {
     private int x, y, size, chanceOfAppearanceStone,  chanceOfAppearanceDuck;
-    private Color colorOfLake, colorOfStone, colorOfGlare, colorOfWaterLily;
+    private Color colorOfLake, colorOfGlare, colorOfWaterLily;
     private final int n = 10;
     private ArrayList<Duck> duckList = new ArrayList<>();
-    private boolean ducksInitialized = false;
+    private ArrayList<Stone> stoneList = new ArrayList<>();
 
-    public Lake(int x, int y, int size, int chanceOfAppearanceStone, int chanceOfAppearanceDuck, Color colorOfLake, Color colorOfStone, Color colorOfGlare, Color colorOfWaterLily) {
+    public Lake(int x, int y, int size, int chanceOfAppearanceStone, int chanceOfAppearanceDuck, Color colorOfLake, Color colorOfGlare, Color colorOfWaterLily) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.chanceOfAppearanceStone = chanceOfAppearanceStone;
         this.chanceOfAppearanceDuck = chanceOfAppearanceDuck;
         this.colorOfLake = colorOfLake;
-        this.colorOfStone = colorOfStone;
         this.colorOfGlare = colorOfGlare;
         this.colorOfWaterLily = colorOfWaterLily;
     }
@@ -37,9 +36,16 @@ public class Lake {
         return y;
     }
 
+    public ArrayList<Stone> getStoneList() {
+        return stoneList;
+    }
+
+    public ArrayList<Duck> getDuckList() {
+        return duckList;
+    }
+
 
     public void draw(Graphics2D g, Random random) {
-
         g.setColor(colorOfLake);
         g.fillOval(x - size, y - size, size * 3, size);
         g.setColor(colorOfGlare);
@@ -50,6 +56,16 @@ public class Lake {
         g.fillOval((int) (x - size * 0.7), (int) (y - size * 0.4), size / 3 , size / 16);
         g.fillOval((int) (x + size * 0.7), (int) (y - size * 0.4), size / 3 * 2 , size / 8);
 
+        for(Stone stone: stoneList) {
+            stone.draw(g);
+        }
+
+        for (Duck duck : duckList) {
+            duck.draw(g);
+        }
+    }
+
+    public void initializedStones(Random random){
         int centerX = x - size + size * 3 / 2;
         int centerY = y - size + size / 2;
         double da = 2 * Math.PI / n;
@@ -64,47 +80,34 @@ public class Lake {
                 } else if (Math.cos(a) < 0) {
                     pointX -= (offset + random.nextInt(10));
                 }
-
                 int pointY = centerY + (int) ((double) (size / 2 + size / 4 / 2) * Math.sin(a));
-                g.setColor(colorOfStone);
-
-                g.fillOval(pointX - size / 4 / 2, pointY - size / 4 / 2, size / 4 * 2, size / 4);
+                stoneList.add(new Stone(pointX - size / 4 / 2, pointY - size / 4 / 2, size / 4 * 2, size / 4));
             }
-        }
-
-        for (Duck duck : duckList) {
-            duck.draw(g);
         }
     }
 
     public void initializedDucks(Random random) {
-        if (!ducksInitialized) {
-            for (int curX = (int) (x - size * 0.5); curX <= x + size; curX += size / 2) {
-                for (int curY = (int) (y - size * 0.5); curY >= (y - size); curY -= size / 4) {
-                    int curChanceOfAppearanceDuck = random.nextInt(100);
-                    if (curChanceOfAppearanceDuck <= chanceOfAppearanceDuck) {
-                        Duck duck = new Duck(curX + random.nextInt(size / 10), curY + random.nextInt(size / 10), (int) (size / 6.5), 1);
-                        if (random.nextInt(100) <= 50) {
-                            duck.setDirection(true);
-                        }
-                        else {
-                            duck.setDirection(false);
-                        }
-                        duckList.add(duck);
+        for (int curX = (int) (x - size * 0.5); curX <= x + size; curX += size / 2) {
+            for (int curY = (int) (y - size * 0.5); curY >= (y - size); curY -= size / 4) {
+                int curChanceOfAppearanceDuck = random.nextInt(100);
+                if (curChanceOfAppearanceDuck <= chanceOfAppearanceDuck) {
+                    Duck duck = new Duck(curX + random.nextInt(size / 10), curY + random.nextInt(size / 10), (int) (size / 6.5), 1);
+                    if (random.nextInt(100) <= 50) {
+                        duck.setDirection(true);
                     }
+                    else {
+                        duck.setDirection(false);
+                    }
+                    duckList.add(duck);
                 }
             }
         }
-        ducksInitialized = true;
     }
 
     public void sortedDuckList(){
         duckList.sort(Comparator.comparingInt(Duck::getY));
     }
 
-    public ArrayList<Duck> getDuckList() {
-        return duckList;
-    }
 
     public void updateDucks() {
         for (Duck duck : duckList) {
