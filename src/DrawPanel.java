@@ -2,109 +2,161 @@ import GeomObjects.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class DrawPanel extends JPanel {
-    private static final int INITIAL_WIDTH = 600;
-    private static final int INITIAL_HEIGHT = 600;
-    private final long seed;
-    private Random random;
+    private static final int INITIAL_WIDTH = 1200;
+    private static final int INITIAL_HEIGHT = 1200;
+    private boolean colorsNeedUpdate = true;
+
+    private Random random = new Random();
     private Path2D path = new Path2D.Double();
+    private Graphics2D g2d;
+    private SceneBuilder sceneBuilder;
+    private TimeManager timeManager;
 
-    ArrayList<Cloud>  cloudList = new ArrayList<>();
-    Sun sun;
-    ArrayList<Fir> firList = new ArrayList<>();
-    AppleTree appleTree;
-    Home home;
-    Lamppost lamppost;
-    Bush bush1;
-    Bush bush2;
-    Lake lake;
+    private ArrayList<Cloud>  cloudList;
+    private ArrayList<Star>  starList;
+    private Sun sun;
+    private Moon moon;
+    private ArrayList<Fir> firList;
+    private AppleTree appleTree;
+    private Home home;
+    private Lamppost lamppost;
+    private ArrayList<Bush> bushList;
+    private Lake lake;
 
-    public DrawPanel(long seed) {
-        this.seed = seed;
-        this.random = new Random(seed);
+    public DrawPanel() {
+        this.timeManager = new TimeManager();
+        this.sceneBuilder = new SceneBuilder(INITIAL_WIDTH, INITIAL_HEIGHT, random);
 
-
-
-        v
-        sun = new Sun(INITIAL_WIDTH / 12, INITIAL_HEIGHT / 12, INITIAL_WIDTH / 24, INITIAL_WIDTH / 17, new Color(221, 240, 14));
-
-        for (int curX = INITIAL_WIDTH / 4; curX <= INITIAL_WIDTH / 1.2; curX += INITIAL_WIDTH / 4) {
-            cloudList.add(new Cloud(curX, INITIAL_HEIGHT / 24 + random.nextInt(INITIAL_HEIGHT / 6), INITIAL_WIDTH / 24 + random.nextInt(INITIAL_WIDTH / 24), 1,
-                    new Color(213, 224, 227)));
-        }
-
-        for (int curX = 0; curX <= INITIAL_WIDTH; curX += INITIAL_WIDTH / 8) {
-            firList.add(new Fir(curX, (int) (INITIAL_HEIGHT / 2.4 - random.nextInt(INITIAL_HEIGHT / 17)), INITIAL_WIDTH / 24 + random.nextInt(INITIAL_WIDTH / 60), new Color(52, 130, 33), new Color(74, 77, 43)));
-        }
-
-        appleTree = new AppleTree(INITIAL_WIDTH / 4, (int) (INITIAL_HEIGHT / 3.4), INITIAL_WIDTH / 12, 70,
-                new Color(222, 29, 51), new Color(38, 148, 57), new Color(74, 65, 44));
-
-        home = new Home((int) (INITIAL_WIDTH / 1.5), INITIAL_HEIGHT / 4 ,INITIAL_WIDTH / 6, new Color(78, 84, 80),
-                new Color(226, 229, 25), new Color(227, 71, 36), new Color(232, 232, 232),
-                new Color(27, 106, 196), new Color(226, 229, 25), new Color(159, 156, 58),
-                new Color(227, 71, 36), new Color(160, 161, 163), new Color(49, 50, 51));
-
-        home.initFlowersOnWindowsill();
-        home.initFlowersOnGarden(random);
-
-        home.getFlowersOnGarden().forEach(flower -> {
-            flower.setColorOfCenterFlower(Color.YELLOW);
-            flower.setColorOfPetals(Color.RED);
-            flower.setColorOfStem(Color.GREEN);
-        });
-
-        home.getFlowersOnWindowsill().forEach(flower -> {
-            flower.setColorOfCenterFlower(Color.YELLOW);
-            flower.setColorOfPetals(Color.BLUE);
-            flower.setColorOfStem(Color.GREEN);
-        });
-
-        home.getFence().setColor(new Color(38, 38, 34));
-
-        lamppost = new Lamppost((int) (INITIAL_WIDTH / 1.142857), (int) (INITIAL_HEIGHT / 2.4), INITIAL_WIDTH / 4, new Color(76, 77, 76), new Color(161, 173, 29));
-
-        bush1 = new Bush((int) (INITIAL_WIDTH / 2.18), (int) (INITIAL_HEIGHT / 1.714), INITIAL_WIDTH / 32, new Color(50, 127, 63));
-        bush2 = new Bush(INITIAL_WIDTH / 12, (int) (INITIAL_HEIGHT / 1.714), INITIAL_WIDTH / 25, new Color(50, 127, 63));
-
-        lake = new Lake(INITIAL_WIDTH / 3, (int) (INITIAL_HEIGHT / 1.090909), INITIAL_WIDTH / 6, 90, 30,
-                new Color(48, 84, 42), new Color(82, 81, 78), new Color(47, 96, 102),
-                new Color(27, 117, 47));
-
-        lake.initializedDucks(random);
-
-        lake.sortedDuckList();
-
-        lake.getDuckList().forEach(duck -> {
-            duck.setBounds((int) (lake.getX() - lake.getSize() * 0.5), lake.getX() + lake.getSize());
-            duck.setColorOfBody(Color.RED);
-            duck.setColorOfBeak(Color.ORANGE);
-            duck.setColorOfEye(Color.WHITE);
-            duck.setColorOfHead(Color.RED);
-            duck.setColorOfInsideOfEye(Color.BLACK);
-            duck.setColorOfNeck(Color.ORANGE);
-            duck.setColorOfWing(Color.ORANGE);
-        });
-
-
-
+        this.sun = sceneBuilder.buildSun();
+        this.moon = sceneBuilder.buildMoon();
+        this.cloudList = sceneBuilder.buildCloudList();
+        this.starList = sceneBuilder.buildStarList(70);
+        this.firList = sceneBuilder.buildFirList();
+        this.appleTree = sceneBuilder.buildAppleTree();
+        this.home = sceneBuilder.buildHome();
+        this.lamppost = sceneBuilder.buildLamppost();
+        this.bushList = sceneBuilder.buildBushes();
+        this.lake = sceneBuilder.buildLake();
 
         new Timer(16, e -> {
-            this.updateClouds();
+            this.cloudList.forEach(cloud -> cloud.update(INITIAL_WIDTH));
             lake.updateDucks();
             this.repaint();
+            this.starList.forEach(Star::update);
         }).start();
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                timeManager.toggleTime();
+                colorsNeedUpdate = true;
+                repaint();
+            }
+        });
     }
+
+
+    private void updateColorsForTime(){
+        sun.setC(timeManager.getSunColor());
+
+        moon.setColor(timeManager.getMoonColor());
+        moon.setSkyColor(timeManager.getSkyColor());
+
+        for (int i = 0; i < cloudList.size(); i ++) {
+            Cloud cloud = cloudList.get(i);
+            cloud.setC(timeManager.getCloudColor(i));
+        }
+
+        for (int i = 0; i < starList.size(); i ++) {
+            Star star = starList.get(i);
+            star.setC(timeManager.getStarColor(i));
+        }
+
+        for (int i = 0; i < firList.size(); i ++) {
+            Fir fir = firList.get(i);
+            TimeManager.FirColors firColors = timeManager.getFirColors(i);
+            fir.setColorTrunk(firColors.getTrunkColor());
+            fir.setColorTree(firColors.getTreeColor());
+        }
+
+        appleTree.setColorTrunk(timeManager.getAppleTreeColors().getTrunkColor());
+        appleTree.setColorCrown(timeManager.getAppleTreeColors().getTreeColor());
+        appleTree.getAppleList().forEach(apple -> apple.setColor(timeManager.getAppleTreeColors().getAppleColor()));
+
+        home.setColorOfHome(timeManager.getHomeColors().getColorOfHome());
+        home.setColorOfDoor(timeManager.getHomeColors().getColorOfDoor());
+        home.setColorOfDoorHandle(timeManager.getHomeColors().getColorOfDoorHandle());
+        home.setColorOfPipe(timeManager.getHomeColors().getColorOfPipe());
+        home.setColorOfRoof(timeManager.getHomeColors().getColorOfRoof());
+        home.setColorOfRungs(timeManager.getHomeColors().getColorOfRungs());
+        home.setColorOfShutters(timeManager.getHomeColors().getColorOfShutters());
+        home.setColorOfWindows(timeManager.getHomeColors().getColorOfWindows());
+        home.setColorOfInsideOfDoor(timeManager.getHomeColors().getColorOfInsideOfDoor());
+        home.setColorOfWindowSill(timeManager.getHomeColors().getColorOfWindowSill());
+
+        for (int i = 0; i < home.getFlowersOnGarden().size(); i ++) {
+            Flower flower = home.getFlowersOnGarden().get(i);
+            TimeManager.FlowerColors flowerColors = timeManager.getFlowerColors(i);
+            flower.setColorOfStem(flowerColors.getColorOfStem());
+            flower.setColorOfPetals(flowerColors.getColorOfPetals());
+            flower.setColorOfCenterFlower(flowerColors.getColorOfCenterFlower());
+        }
+
+        for (int i = 0; i < home.getFlowersOnWindowsill().size(); i ++) {
+            Flower flower = home.getFlowersOnWindowsill().get(i);
+            TimeManager.FlowerColors flowerColors = timeManager.getFlowerColors(i);
+            flower.setColorOfStem(flowerColors.getColorOfStem());
+            flower.setColorOfPetals(flowerColors.getColorOfPetals());
+            flower.setColorOfCenterFlower(flowerColors.getColorOfCenterFlower());
+        }
+
+        home.getFence().setColor(timeManager.getFenceColor());
+
+        lamppost.setColorLamp(timeManager.getLamppostColors().getColorLamp());
+        lamppost.setColorPost(timeManager.getLamppostColors().getColorPost());
+
+        for (int i = 0; i < bushList.size(); i ++) {
+            Bush bush = bushList.get(i);
+            bush.setColor(timeManager.getBushColor(i));
+        }
+
+
+        lake.setColorOfLake(timeManager.getLakeColors().getColorOfLake());
+        lake.setColorOfGlare(timeManager.getLakeColors().getColorOfGlare());
+        lake.setColorOfWaterLily(timeManager.getLakeColors().getColorOfWaterLily());
+
+        for (int i = 0; i < lake.getStoneList().size(); i ++) {
+            Stone stone = lake.getStoneList().get(i);
+            stone.setColor(timeManager.getStoneColor(i));
+        }
+
+        for (int i = 0; i < lake.getDuckList().size(); i ++) {
+            Duck duck = lake.getDuckList().get(i);
+            duck.setColorOfBody(timeManager.getDuckColors(i).getColorOfBody());
+            duck.setColorOfBeak(timeManager.getDuckColors(i).getColorOfBeak());
+            duck.setColorOfEye(timeManager.getDuckColors(i).getColorOfEye());
+            duck.setColorOfHead(timeManager.getDuckColors(i).getColorOfHead());
+            duck.setColorOfInsideOfEye(timeManager.getDuckColors(i).getColorOfInsideOfEye());
+            duck.setColorOfNeck(timeManager.getDuckColors(i).getColorOfNeck());
+            duck.setColorOfWing(timeManager.getDuckColors(i).getColorOfWing());
+        }
+
+    }
+
+
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        random.setSeed(seed);
+        g2d = (Graphics2D) g;
+
         int currentWidth = getWidth();
         int currentHeight = getHeight();
 
@@ -117,12 +169,23 @@ public class DrawPanel extends JPanel {
         g2d.translate(offsetX, offsetY);
         g2d.scale(scaleX, scaleY);
 
-        DrawUtils.drawBackground(g2d, INITIAL_WIDTH, INITIAL_HEIGHT, INITIAL_HEIGHT / 200,
-                INITIAL_WIDTH / 3, new Color(41, 194, 214), new Color(61, 184, 50));
+        if (colorsNeedUpdate) {
+            updateColorsForTime();
+            colorsNeedUpdate = false;
+        }
 
-        sun.draw(g2d);
+        DrawUtils.drawBackground(g2d, INITIAL_WIDTH, INITIAL_HEIGHT, INITIAL_HEIGHT / 200, INITIAL_WIDTH / 3,
+                timeManager.getSkyColor(), timeManager.getGroundColor());
 
-        cloudList.stream().forEach(cloud -> cloud.draw(g2d));
+
+        if(timeManager.isDay()) {
+            sun.draw(g2d);
+            cloudList.stream().forEach(cloud -> cloud.draw(g2d));
+        }
+        else {
+            moon.draw(g2d);
+            starList.stream().forEach(star -> star.draw(g2d));
+        }
 
         firList.stream().forEach(fir -> fir.draw(g2d, path));
 
@@ -132,17 +195,9 @@ public class DrawPanel extends JPanel {
 
         lamppost.draw(g2d);
 
-        bush1.draw(g2d);
-
-        bush2.draw(g2d);
+        bushList.forEach(bush -> bush.draw(g2d));
 
         lake.draw(g2d, random);
-    }
-
-    private void updateClouds() {
-        for (Cloud cloud : cloudList) {
-            cloud.update(INITIAL_WIDTH);
-        }
     }
 
     @Override

@@ -15,6 +15,20 @@ public class Lamppost {
         this.colorLamp = colorLamp;
     }
 
+    public Lamppost(int x, int y, int size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+    }
+
+    public void setColorPost(Color colorPost) {
+        this.colorPost = colorPost;
+    }
+
+    public void setColorLamp(Color colorLamp) {
+        this.colorLamp = colorLamp;
+    }
+
     public void draw(Graphics2D g) {
         g.setColor(colorPost);
         g.fillRect(x - size / 4, y, size / 4, size / 32);

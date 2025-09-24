@@ -22,23 +22,53 @@ public class Home {
     private ArrayList<Flower> flowersOnGarden = new ArrayList<>();
     private Fence fence;
 
-    public Home(int x, int y, int size, Color colorOfPipe, Color colorOfRoof, Color colorOfHome, Color colorOfShutters,
-                Color colorOfWindows, Color colorOfDoor, Color colorOfInsideOfDoor, Color colorOfDoorHandle,
-                Color colorOfWindowSill, Color colorOfRungs) {
+    public Home(int x, int y, int size) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.colorOfPipe = colorOfPipe;
-        this.colorOfRoof = colorOfRoof;
-        this.colorOfHome = colorOfHome;
-        this.colorOfShutters = colorOfShutters;
-        this.colorOfWindows = colorOfWindows;
-        this.colorOfDoor = colorOfDoor;
-        this.colorOfInsideOfDoor = colorOfInsideOfDoor;
-        this.colorOfDoorHandle = colorOfDoorHandle;
-        this.colorOfWindowSill = colorOfWindowSill;
-        this.colorOfRungs = colorOfRungs;
         fence = new Fence(x - size * 2/16, y + size * 34/16, size * 18/16, size / 6);
+    }
+
+
+
+    public void setColorOfPipe(Color colorOfPipe) {
+        this.colorOfPipe = colorOfPipe;
+    }
+
+    public void setColorOfRoof(Color colorOfRoof) {
+        this.colorOfRoof = colorOfRoof;
+    }
+
+    public void setColorOfHome(Color colorOfHome) {
+        this.colorOfHome = colorOfHome;
+    }
+
+    public void setColorOfShutters(Color colorOfShutters) {
+        this.colorOfShutters = colorOfShutters;
+    }
+
+    public void setColorOfWindows(Color colorOfWindows) {
+        this.colorOfWindows = colorOfWindows;
+    }
+
+    public void setColorOfDoor(Color colorOfDoor) {
+        this.colorOfDoor = colorOfDoor;
+    }
+
+    public void setColorOfInsideOfDoor(Color colorOfInsideOfDoor) {
+        this.colorOfInsideOfDoor = colorOfInsideOfDoor;
+    }
+
+    public void setColorOfDoorHandle(Color colorOfDoorHandle) {
+        this.colorOfDoorHandle = colorOfDoorHandle;
+    }
+
+    public void setColorOfWindowSill(Color colorOfWindowSill) {
+        this.colorOfWindowSill = colorOfWindowSill;
+    }
+
+    public void setColorOfRungs(Color colorOfRungs) {
+        this.colorOfRungs = colorOfRungs;
     }
 
     public ArrayList<Flower> getFlowersOnWindowsill() {

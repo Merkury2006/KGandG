@@ -9,17 +9,24 @@ public class Cloud {
     private double angle = 0;
     private double amplitude;
     private double period;
+    private int paletteIndex;
 
 
-    public Cloud(int x, int y, int r, int speed, Color c) {
+    public Cloud(int x, int y, int r, int speed) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.speed = speed;
-        this.c = c;
         this.amplitude = 5;
         this.period = 0.02 + Math.random() * 0.03;
     }
+
+
+
+    public void setC(Color c) {
+        this.c = c;
+    }
+
 
     public void draw(Graphics2D g) {
         int currentY = y + (int)(amplitude * Math.sin(angle));
