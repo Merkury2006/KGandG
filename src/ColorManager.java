@@ -5,8 +5,8 @@ public class ColorManager {
     private final Random random;
     private final Map<String, Integer> colorCache = new HashMap<>();
 
-    public ColorManager(long seed) {
-        this.random = new Random(seed);
+    public ColorManager(Random random) {
+        this.random = random;
     }
 
     public <T> T getObjectColor(ArrayList<T> palette, String objectKey) {

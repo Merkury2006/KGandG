@@ -31,7 +31,7 @@ public class DrawPanel extends JPanel {
     private Lake lake;
 
     public DrawPanel() {
-        this.timeManager = new TimeManager();
+        this.timeManager = new TimeManager(random);
         this.sceneBuilder = new SceneBuilder(INITIAL_WIDTH, INITIAL_HEIGHT, random);
 
         this.sun = sceneBuilder.buildSun();
@@ -47,15 +47,16 @@ public class DrawPanel extends JPanel {
 
         new Timer(16, e -> {
             this.cloudList.forEach(cloud -> cloud.update(INITIAL_WIDTH));
+            this.starList.forEach(Star::update);
             lake.updateDucks();
             this.repaint();
-            this.starList.forEach(Star::update);
         }).start();
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 timeManager.toggleTime();
+                lake.getDuckList().forEach(duck -> duck.setSpeed(timeManager.isDay()));
                 colorsNeedUpdate = true;
                 repaint();
             }

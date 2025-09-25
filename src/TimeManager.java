@@ -1,11 +1,13 @@
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 
 public class TimeManager {
     private boolean isDay = true;
     private final ColorManager colorManager;
+    private Random random;
 
     class FirColors {
         private Color treeColor;
@@ -644,8 +646,8 @@ public class TimeManager {
             )
     ));
 
-    public TimeManager() {
-        this.colorManager = new ColorManager(System.currentTimeMillis());
+    public TimeManager(Random random) {
+        this.colorManager = new ColorManager(random);
     }
 
     public boolean isDay() {
