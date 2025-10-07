@@ -7,16 +7,24 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Lake {
+    public interface ColorProvider {
+        Color getColorOfLke();
+        Color getColorOfGrlare();
+        Color getColorOfWaterLily();
+    }
+
     private int x, y, size, chanceOfAppearanceStone,  chanceOfAppearanceDuck;
     private Color colorOfLake, colorOfGlare, colorOfWaterLily;
     private final int n = 10;
     private ArrayList<Duck> duckList = new ArrayList<>();
     private ArrayList<Stone> stoneList = new ArrayList<>();
 
-    public Lake(int x, int y, int size, int chanceOfAppearanceStone, int chanceOfAppearanceDuck) {
+    private ColorProvider cp;
+    public Lake(int x, int y, int size, int chanceOfAppearanceStone, int chanceOfAppearanceDuck, ColorProvider cp) {
         this.x = x;
         this.y = y;
         this.size = size;
+        this.cp = cp;
         this.chanceOfAppearanceStone = chanceOfAppearanceStone;
         this.chanceOfAppearanceDuck = chanceOfAppearanceDuck;
     }
@@ -55,7 +63,7 @@ public class Lake {
 
 
     public void draw(Graphics2D g, Random random) {
-        g.setColor(colorOfLake);
+        g.setColor(cp.getColorOfLke());
         g.fillOval(x - size, y - size, size * 3, size);
         g.setColor(colorOfGlare);
         g.fillOval((int) (x  + size * 0.2), (int) (y - size * 0.6), size / 3 * 4, size / 4);

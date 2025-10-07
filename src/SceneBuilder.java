@@ -75,8 +75,9 @@ public class SceneBuilder {
         return bushList;
     }
 
-    public Lake buildLake(){
-        Lake lake = new Lake(width / 3, (int) (height / 1.090909), width / 6, 90, 30);
+    public Lake buildLake(TimeManager tm){
+        Lake lake = new Lake(width / 3, (int) (height / 1.090909),
+                width / 6, 90, 30, tm.getLakeColorProvider());
 
         lake.initializedStones(random);
 

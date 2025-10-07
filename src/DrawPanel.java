@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class DrawPanel extends JPanel {
-    private static final int INITIAL_WIDTH = 1200;
-    private static final int INITIAL_HEIGHT = 1200;
+    private static final int INITIAL_WIDTH = 800;
+    private static final int INITIAL_HEIGHT = 800;
     private boolean colorsNeedUpdate = true;
 
     private Random random = new Random();
@@ -19,7 +19,7 @@ public class DrawPanel extends JPanel {
     private SceneBuilder sceneBuilder;
     private TimeManager timeManager;
 
-    private ArrayList<Cloud>  cloudList;
+    private java.util.List<Cloud>  cloudList;
     private ArrayList<Star>  starList;
     private Sun sun;
     private Moon moon;
@@ -43,7 +43,7 @@ public class DrawPanel extends JPanel {
         this.home = sceneBuilder.buildHome();
         this.lamppost = sceneBuilder.buildLamppost();
         this.bushList = sceneBuilder.buildBushes();
-        this.lake = sceneBuilder.buildLake();
+        this.lake = sceneBuilder.buildLake(timeManager);
 
         new Timer(16, e -> {
             this.cloudList.forEach(cloud -> cloud.update(INITIAL_WIDTH));

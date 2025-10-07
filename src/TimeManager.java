@@ -1,3 +1,5 @@
+import GeomObjects.Lake;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +8,25 @@ import java.util.Arrays;
 public class TimeManager {
     private boolean isDay = true;
     private final ColorManager colorManager;
+
+    public Lake.ColorProvider getLakeColorProvider() {
+        return new Lake.ColorProvider() {
+            @Override
+            public Color getColorOfLke() {
+                return TimeManager.this.getLakeColors().colorOfLake;
+            }
+
+            @Override
+            public Color getColorOfGrlare() {
+                return null;
+            }
+
+            @Override
+            public Color getColorOfWaterLily() {
+                return null;
+            }
+        };
+    }
 
     class FirColors {
         private Color treeColor;
