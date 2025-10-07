@@ -5,8 +5,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
 public class Duck {
-    private int x, y, size;
-    private int speed;
+    private double x;
+    private int y, size;
+    private double baseSpeed;
+    private double currentSpeed;
     private Color colorOfBeak, colorOfNeck, colorOfHead, colorOfEye, colorOfInsideOfEye, colorOfBody, colorOfWing;
     private boolean facingRight;
     private int minX, maxX;
@@ -15,11 +17,12 @@ public class Duck {
         return y;
     }
 
-    public Duck(int x, int y, int size, int speed, Color colorOfBeak, Color colorOfNeck, Color colorOfHead, Color colorOfEye, Color colorOfInsideOfEye, Color colorOfBody, Color colorOfWing) {
+    public Duck(int x, int y, int size, double speed, Color colorOfBeak, Color colorOfNeck, Color colorOfHead, Color colorOfEye, Color colorOfInsideOfEye, Color colorOfBody, Color colorOfWing) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.speed = speed;
+        this.baseSpeed = speed;
+        this.currentSpeed = baseSpeed;
         this.colorOfBeak = colorOfBeak;
         this.colorOfNeck = colorOfNeck;
         this.colorOfHead = colorOfHead;
@@ -30,11 +33,25 @@ public class Duck {
     }
 
 
-    public Duck(int x, int y, int size, int speed) {
+    public Duck(int x, int y, int size, double speed) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.speed = speed;
+        this.baseSpeed = speed;
+        this.currentSpeed = baseSpeed;
+    }
+
+    public void setSpeed(boolean isDay) {
+        if (isDay) {
+            this.currentSpeed = baseSpeed;
+        }
+        else {
+            this.currentSpeed = baseSpeed / 2;
+        }
+    }
+
+    public double getSpeed() {
+        return currentSpeed;
     }
 
     public void setColorOfBeak(Color colorOfBeak) {
@@ -65,10 +82,6 @@ public class Duck {
         this.colorOfWing = colorOfWing;
     }
 
-    public void setFacingRight(boolean facingRight) {
-        this.facingRight = facingRight;
-    }
-
     public void setDirection(boolean facingRight) {
         this.facingRight = facingRight;
     }
@@ -80,12 +93,12 @@ public class Duck {
 
     public void update() {
         if (facingRight) {
-            x += speed;
+            x += currentSpeed;
             if (x > maxX) {
                 facingRight = false;
             }
         } else {
-            x -= speed;
+            x -= currentSpeed;
             if (x < minX) {
                 facingRight = true;
             }
