@@ -1,33 +1,25 @@
-package GeomObjects;
+package org.example.KGandG.GeomObjects;
 
 import java.awt.*;
 
 public class Sun {
+    public interface ColorProvider{
+        Color getColor();
+    }
     private final int n = 8;
     private int x, y, r, R;
-    private Color c;
+    private ColorProvider colorProvider;
 
-    public Sun(int x, int y, int r, int rayLength, Color c) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
-        this.R = r + rayLength;
-        this.c = c;
-    }
-
-    public Sun(int x, int y, int r, int r1) {
+    public Sun(int x, int y, int r, int r1, ColorProvider colorProvider) {
         this.x = x;
         this.y = y;
         this.r = r;
         R = r1;
-    }
-
-    public void setC(Color c) {
-        this.c = c;
+        this.colorProvider = colorProvider;
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(c);
+        g.setColor(colorProvider.getColor());
         g.fillOval(x - r, y - r, r + r, r + r);
         double da = 2 * Math.PI / n;
         for (int i = 0; i < n; i ++) {

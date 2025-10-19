@@ -1,32 +1,24 @@
-package GeomObjects;
+package org.example.KGandG.GeomObjects;
 
 import java.awt.*;
 
 public class Fence {
+    public interface ColorProvider {
+        Color getColor();
+    }
     private int x, y, width, height;
-    private Color color;
+    private ColorProvider colorProvider;
 
-    public Fence(int x, int y, int width, int height, Color color) {
+    public Fence(int x, int y, int width, int height, ColorProvider colorProvider) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.color = color;
-    }
-
-    public Fence(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
+        this.colorProvider = colorProvider;
     }
 
     public  void draw(Graphics2D g) {
-        g.setColor(color);
+        g.setColor(colorProvider.getColor());
         g.setStroke(new BasicStroke((float) width / 16));
         for (int curX = x; curX <= x + width; curX += width / 4) {
             g.drawLine(curX, y, curX, y + height);

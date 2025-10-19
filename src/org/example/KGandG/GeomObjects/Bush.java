@@ -1,31 +1,24 @@
-package GeomObjects;
+package org.example.KGandG.GeomObjects;
 
 import java.awt.*;
 
 public class Bush {
+    public interface ColorProvider{
+        Color getColor();
+    }
     private final int n = 5;
     private int x, y, size;
-    private Color color;
+    private ColorProvider colorProvider;
 
-    public Bush(int x, int y, int size, Color color) {
+    public Bush(int x, int y, int size, ColorProvider colorProvider) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.color = color;
-    }
-
-    public Bush(int x, int y, int size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
+        this.colorProvider = colorProvider;
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(color);
+        g.setColor(colorProvider.getColor());
         for (int i = x - size; i <= x + size; i += size) {
             int curX = i;
             int curY = y + size;

@@ -1,35 +1,26 @@
-package GeomObjects;
+package org.example.KGandG.GeomObjects;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
 
 public class Fir {
+    public interface ColorProvider{
+        Color getColorOfTree();
+        Color getColorOfTrunk();
+    }
     private int x, y, size;
-    private Color colorTree, colorTrunk;
+    private ColorProvider colorProvider;
 
-    public Fir(int x, int y, int size, Color colorTree, Color colorTrunk) {
+    private Path2D path = new Path2D.Double();
+
+    public Fir(int x, int y, int size, ColorProvider colorProvider) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.colorTree = colorTree;
-        this.colorTrunk = colorTrunk;
+        this.colorProvider = colorProvider;
     }
 
-    public Fir(int x, int y, int size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-    }
-
-    public void setColorTree(Color colorTree) {
-        this.colorTree = colorTree;
-    }
-
-    public void setColorTrunk(Color colorTrunk) {
-        this.colorTrunk = colorTrunk;
-    }
-
-    public void draw(Graphics2D g, Path2D path) {
+    public void draw(Graphics2D g) {
         path.moveTo(x, y);
         path.lineTo(x - size, y + size);
         path.lineTo(x + size, y + size);
@@ -44,10 +35,10 @@ public class Fir {
 
         path.closePath();
 
-        g.setColor(colorTree);
+        g.setColor(colorProvider.getColorOfTree());
         g.fill(path);
         path.reset();
-        g.setColor(colorTrunk);
+        g.setColor(colorProvider.getColorOfTrunk());
         g.fillRect((int) (x - size * 0.3), y + size * 3, (int) (size * 0.6), (int) (size * 0.4));
     }
 

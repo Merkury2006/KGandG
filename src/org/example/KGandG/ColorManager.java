@@ -1,3 +1,5 @@
+package org.example.KGandG;
+
 import java.awt.*;
 import java.util.*;
 

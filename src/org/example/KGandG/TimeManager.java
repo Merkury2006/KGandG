@@ -1,4 +1,22 @@
-import GeomObjects.Lake;
+package org.example.KGandG;
+
+
+import org.example.KGandG.GeomObjects.Apple;
+import org.example.KGandG.GeomObjects.AppleTree;
+import org.example.KGandG.GeomObjects.Background;
+import org.example.KGandG.GeomObjects.Bush;
+import org.example.KGandG.GeomObjects.Cloud;
+import org.example.KGandG.GeomObjects.Duck;
+import org.example.KGandG.GeomObjects.Fence;
+import org.example.KGandG.GeomObjects.Fir;
+import org.example.KGandG.GeomObjects.Flower;
+import org.example.KGandG.GeomObjects.Home;
+import org.example.KGandG.GeomObjects.Lake;
+import org.example.KGandG.GeomObjects.Lamppost;
+import org.example.KGandG.GeomObjects.Moon;
+import org.example.KGandG.GeomObjects.Star;
+import org.example.KGandG.GeomObjects.Stone;
+import org.example.KGandG.GeomObjects.Sun;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,23 +27,70 @@ import java.util.Random;
 public class TimeManager {
     private boolean isDay = true;
     private final ColorManager colorManager;
-    private Random random;
 
-    public Lake.ColorProvider getLakeColorProvider() {
-        return new Lake.ColorProvider() {
+
+    public Sun.ColorProvider getSunColorProvider() {
+        return new Sun.ColorProvider() {
             @Override
-            public Color getColorOfLke() {
-                return TimeManager.this.getLakeColors().colorOfLake;
+            public Color getColor() {
+                return TimeManager.this.getSunColor();
+            }
+        };
+    }
+
+
+
+    public Moon.ColorProvider getMoonColorProvider() {
+        return new Moon.ColorProvider() {
+            @Override
+            public Color getColorOfMoon() {
+                return TimeManager.this.getMoonColor();
             }
 
             @Override
-            public Color getColorOfGrlare() {
-                return null;
+            public Color getColorOfSky() {
+                return TimeManager.this.getSkyColor();
+            }
+        };
+    }
+
+
+    public Cloud.ColorProvider getCloudColorProvider(int i) {
+        return new Cloud.ColorProvider() {
+            @Override
+            public Color getColor() {
+                return TimeManager.this.getCloudColor(i);
+            }
+        };
+    }
+
+
+
+
+    public Star.ColorProvider getStarColorProvider(int i) {
+        return new Star.ColorProvider() {
+            @Override
+            public Color getColor() {
+                return TimeManager.this.getStarColor(i);
+            }
+        };
+    }
+
+
+
+
+
+
+    public Fir.ColorProvider getFirColorProvider(int i) {
+        return new Fir.ColorProvider() {
+            @Override
+            public Color getColorOfTree() {
+                return TimeManager.this.getFirColors(i).getTreeColor();
             }
 
             @Override
-            public Color getColorOfWaterLily() {
-                return null;
+            public Color getColorOfTrunk() {
+                return TimeManager.this.getFirColors(i).getTrunkColor();
             }
         };
     }
@@ -34,9 +99,9 @@ public class TimeManager {
         private Color treeColor;
         private Color trunkColor;
 
-        public FirColors(Color TREE_COLOR, Color TRUNK_COLOR) {
-            this.treeColor = TREE_COLOR;
-            this.trunkColor = TRUNK_COLOR;
+        public FirColors(Color treeColor, Color trunkColor) {
+            this.treeColor = treeColor;
+            this.trunkColor = trunkColor;
         }
 
         public Color getTreeColor() {
@@ -48,15 +113,32 @@ public class TimeManager {
         }
     }
 
+
+
+
+
+    public AppleTree.ColorProvider getAppleTreeColorProvider() {
+        return new AppleTree.ColorProvider() {
+
+            @Override
+            public Color getColorOfCrown() {
+                return TimeManager.this.getAppleTreeColors().getTreeColor();
+            }
+
+            @Override
+            public Color getColorOfTrunk() {
+                return TimeManager.this.getAppleTreeColors().getTrunkColor();
+            }
+        };
+    }
+
     class AppleTreeColors {
         private  Color treeColor;
         private  Color trunkColor;
-        private  Color appleColor;
 
-        public AppleTreeColors(Color TREE_COLOR, Color TRUNK_COLOR, Color appleColor) {
-            this.treeColor = TREE_COLOR;
-            this.trunkColor = TRUNK_COLOR;
-            this.appleColor = appleColor;
+        public AppleTreeColors(Color treeColor, Color trunkColor) {
+            this.treeColor = treeColor;
+            this.trunkColor = trunkColor;
         }
 
         public Color getTreeColor() {
@@ -66,10 +148,66 @@ public class TimeManager {
         public Color getTrunkColor() {
             return trunkColor;
         }
+    }
 
-        public Color getAppleColor() {
-            return appleColor;
-        }
+
+
+
+
+
+    public Home.ColorProvider getHomeColorProvider() {
+        return new Home.ColorProvider() {
+
+            @Override
+            public Color getColorOfPipe() {
+                return TimeManager.this.getHomeColors().getColorOfPipe();
+            }
+
+            @Override
+            public Color getColorOfRoof() {
+                return TimeManager.this.getHomeColors().getColorOfRoof();
+            }
+
+            @Override
+            public Color getColorOfHome() {
+                return TimeManager.this.getHomeColors().getColorOfHome();
+            }
+
+            @Override
+            public Color getColorOfShutters() {
+                return TimeManager.this.getHomeColors().getColorOfShutters();
+            }
+
+            @Override
+            public Color getColorOfWindows() {
+                return TimeManager.this.getHomeColors().getColorOfWindows();
+            }
+
+            @Override
+            public Color getColorOfDoor() {
+                return TimeManager.this.getHomeColors().getColorOfDoor();
+            }
+
+            @Override
+            public Color getColorOfInsideOfDoor() {
+                return TimeManager.this.getHomeColors().getColorOfInsideOfDoor();
+            }
+
+            @Override
+            public Color getColorOfDoorHandle() {
+                return TimeManager.this.getHomeColors().getColorOfDoorHandle();
+            }
+
+            @Override
+            public Color getColorOfWindowSill() {
+                return TimeManager.this.getHomeColors().getColorOfWindowSill();
+            }
+
+            @Override
+            public Color getColorOfRungs() {
+                return TimeManager.this.getHomeColors().getColorOfRungs();
+            }
+        };
     }
 
     class HomeColors {
@@ -140,6 +278,31 @@ public class TimeManager {
         }
     }
 
+
+
+
+
+
+    public Flower.ColorProvider getFlowerColorProvider(int i) {
+        return new Flower.ColorProvider(){
+
+            @Override
+            public Color getColorOfStem() {
+                return TimeManager.this.getFlowerColors(i).getColorOfStem();
+            }
+
+            @Override
+            public Color getColorOfPetals() {
+                return TimeManager.this.getFlowerColors(i).getColorOfPetals();
+            }
+
+            @Override
+            public Color getColorOfCenterFlower() {
+                return TimeManager.this.getFlowerColors(i).getColorOfCenterFlower();
+            }
+        };
+    }
+
     class FlowerColors {
         private Color colorOfCenterFlower;
         private Color colorOfPetals;
@@ -164,6 +327,40 @@ public class TimeManager {
         }
     }
 
+
+    public Fence.ColorProvider getFenceColorProvider() {
+        return new Fence.ColorProvider(){
+            @Override
+            public Color getColor() {
+                return TimeManager.this.getFenceColor();
+            }
+        };
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public Lamppost.ColorProvider getLamppostColorProvider() {
+        return new Lamppost.ColorProvider(){
+            @Override
+            public Color getColorOfPost() {
+                return TimeManager.this.getLamppostColors().getColorPost();
+            }
+
+            @Override
+            public Color getColorOfLamp() {
+                return TimeManager.this.getLamppostColors().getColorLamp();
+            }
+        };
+    }
+
     class LamppostColors {
         private Color colorPost;
         private Color colorLamp;
@@ -180,6 +377,51 @@ public class TimeManager {
         public Color getColorLamp() {
             return colorLamp;
         }
+    }
+
+
+
+    public Apple.ColorProvider getAppleColorProvider(int i) {
+        return new Apple.ColorProvider(){
+            @Override
+            public Color getColor() {
+                return TimeManager.this.getAppleColor(i);
+            }
+        };
+    }
+
+
+
+
+
+    public Bush.ColorProvider getBushColorProvider(int i) {
+        return new Bush.ColorProvider(){
+            @Override
+            public Color getColor() {
+                return TimeManager.this.getBushColor(i);
+            }
+        };
+    }
+
+
+
+    public Lake.ColorProvider getLakeColorProvider() {
+        return new Lake.ColorProvider() {
+            @Override
+            public Color getColorOfLake() {
+                return TimeManager.this.getLakeColors().getColorOfLake();
+            }
+
+            @Override
+            public Color getColorOfGlare() {
+                return TimeManager.this.getLakeColors().getColorOfGlare();
+            }
+
+            @Override
+            public Color getColorOfWaterLily() {
+                return TimeManager.this.getLakeColors().getColorOfWaterLily();
+            }
+        };
     }
 
     class LakeColors {
@@ -202,6 +444,53 @@ public class TimeManager {
         public Color getColorOfWaterLily() {
             return colorOfWaterLily;
         }
+    }
+
+
+
+
+
+
+
+
+
+    public Duck.ColorProvider getDuckColorProvider(int i ) {
+        return new Duck.ColorProvider() {
+            @Override
+            public Color getColorOfBeak() {
+                return TimeManager.this.getDuckColors(i).getColorOfBeak();
+            }
+
+            @Override
+            public Color getColorOfNeck() {
+                return TimeManager.this.getDuckColors(i).getColorOfNeck();
+            }
+
+            @Override
+            public Color getColorOfHead() {
+                return TimeManager.this.getDuckColors(i).getColorOfHead();
+            }
+
+            @Override
+            public Color getColorOfEye() {
+                return TimeManager.this.getDuckColors(i).getColorOfEye();
+            }
+
+            @Override
+            public Color getColorOfInsideOfEye() {
+                return TimeManager.this.getDuckColors(i).getColorOfInsideOfEye();
+            }
+
+            @Override
+            public Color getColorOfBody() {
+                return TimeManager.this.getDuckColors(i).getColorOfBody();
+            }
+
+            @Override
+            public Color getColorOfWing() {
+                return TimeManager.this.getDuckColors(i).getColorOfWing();
+            }
+        };
     }
 
     class DuckColors {
@@ -244,6 +533,30 @@ public class TimeManager {
         public Color getColorOfWing() {
             return colorOfWing;
         }
+    }
+
+
+    public Stone.ColorProvider getStoneColorProvider(int index) {
+        return new Stone.ColorProvider() {
+            @Override
+            public Color getColor() {
+                return TimeManager.this.getStoneColor(index);
+            }
+        };
+    }
+
+    public Background.ColorProvider getBackgroundColorProvider() {
+        return new Background.ColorProvider() {
+            @Override
+            public Color getColorOfSky() {
+                return TimeManager.this.getSkyColor();
+            }
+
+            @Override
+            public Color getColorOfGround() {
+                return TimeManager.this.getGroundColor();
+            }
+        };
     }
 
 
@@ -343,14 +656,25 @@ public class TimeManager {
     ));
 
     private final ArrayList<AppleTreeColors> dayAppleTreePalette = new ArrayList<>(Arrays.asList(
-            new AppleTreeColors(new Color(34, 139, 34), new Color(102, 51, 0), new Color(255, 0, 0)),
-            new AppleTreeColors(new Color(50, 205, 50), new Color(139, 69, 19), new Color(220, 20, 60)),
-            new AppleTreeColors(new Color(0, 128, 0), new Color(70, 35, 0), new Color(178, 34, 34))
+            new AppleTreeColors(new Color(34, 139, 34), new Color(102, 51, 0)),
+            new AppleTreeColors(new Color(50, 205, 50), new Color(139, 69, 19)),
+            new AppleTreeColors(new Color(0, 128, 0), new Color(70, 35, 0))
     ));
     private final ArrayList<AppleTreeColors> nightAppleTreePalette = new ArrayList<>(Arrays.asList(
-            new AppleTreeColors(new Color(20, 90, 20), new Color(60, 30, 0), new Color(150, 0, 0)),
-            new AppleTreeColors(new Color(30, 100, 60), new Color(100, 50, 25), new Color(100, 20, 20)),
-            new AppleTreeColors(new Color(0, 100, 0), new Color(50, 25, 0), new Color(120, 0, 0))
+            new AppleTreeColors(new Color(20, 90, 20), new Color(60, 30, 0)),
+            new AppleTreeColors(new Color(30, 100, 60), new Color(100, 50, 25)),
+            new AppleTreeColors(new Color(0, 100, 0), new Color(50, 25, 0))
+    ));
+
+    private final ArrayList<Color> dayApplePalette = new ArrayList<>(Arrays.asList(
+            new Color(255, 0, 0),
+            new Color(220, 20, 60),
+            new Color(178, 34, 34)
+    ));
+    private final ArrayList<Color> nightApplePalette = new ArrayList<>(Arrays.asList(
+            new Color(150, 0, 0),
+            new Color(100, 20, 20),
+            new Color(120, 0, 0)
     ));
 
     private final ArrayList<HomeColors> dayHomePalette = new ArrayList<>(Arrays.asList(
@@ -729,6 +1053,13 @@ public class TimeManager {
         return isDay ?
                 colorManager.getObjectColor(dayAppleTreePalette, "appleTree") :
                 colorManager.getObjectColor(nightAppleTreePalette, "appleTree");
+    }
+
+    public Color getAppleColor(int appleIndex) {
+        String key = "apple_" + appleIndex;
+        return isDay ?
+                colorManager.getObjectColor(dayApplePalette, key) :
+                colorManager.getObjectColor(nightApplePalette, key);
     }
 
     public HomeColors getHomeColors() {

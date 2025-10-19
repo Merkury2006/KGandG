@@ -1,3 +1,5 @@
+package org.example.KGandG;
+
 import javax.swing.*;
 
 public class Main {
